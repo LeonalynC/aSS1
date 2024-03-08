@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bootstrap demo</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<style>
+  body {
+    font-family: 'Helvetica';
+    font-size: 30px;
+    background-image: url('l.gif');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: #333; /* Dark text color */
+    transition: all 0.3s ease;
+  }
+  .form-group label {
+    font-weight: bold;
+    color: #ff69b4; /* Pink label color */
+    text-shadow: 1px 1px 2px rgb(255, 228, 77);
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+  }
+  textarea {
+    min-height: 100px;
+    transition: all 0.3s ease;
+  }
+  .card {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    background-color: #fff;
+  }
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  }
+  .card-header {
+    background-color: #ffa1a1;
+    color: #fff;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .card-body {
+    color: #666;
+    transition: color 0.3s ease;
+  }
+  .deleteBtn {
+    background-color: #ffa1a1;
+    color: #fff;
+    border: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .deleteBtn:hover {
+    background-color: #ff455e;
+  }
+  #addBtn {
+    background-color: #d8bfd8;
+    color: #fff;
+    border: none;
+    font-size: 1.2rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  #addBtn:hover {
+    background-color: #b68cb8;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <form id="add-item">
+        <div class="form-group mt-4">
+          <label for="inputTitle">Add a title</label>
+          <input type="text" class="form-control" placeholder="Enter title" id="inputTitle">
+        </div>
+        <div class="form-group mt-4">
+          <label for="inputContent">Add body content</label>
+          <textarea class="form-control" placeholder="Type something" id="inputContent"></textarea>
+        </div>
+        <div class="col float-end mt-4">
+          <button class="btn btn-primary" id="addBtn">Add</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row mt-4" id="cardContainer">
+    <!-- Cards will be appended here -->
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+<script>
+  const addBtn = document.getElementById('addBtn');
+  const cardContainer = document.getElementById('cardContainer');
+
+  addBtn.addEventListener('click', function(event) {
+    event.preventDefault();
+
+    const inputTitle = document.getElementById('inputTitle').value;
+    const inputContent = document.getElementById('inputContent').value;
+
+    if (inputTitle && inputContent) {
+      const card = `
+        <div class="col-md-12">
+          <div class="card mt-4">
+            <div class="card-header">
+              <h2>${inputTitle}</h2>
+            </div>
+            <div class="card-body">
+              <p>${inputContent}</p>
+              <button class="btn btn-danger float-end deleteBtn">Delete</button>
+            </div>
+          </div>
+        </div>
+      `;
+      cardContainer.insertAdjacentHTML('beforeend', card);
+
+      // Clear input fields after adding card
+      document.getElementById('inputTitle').value = '';
+      document.getElementById('inputContent').value = '';
+    }
+  });
+
+  // Delete card functionality
+  cardContainer.addEventListener('click', function(event) {
+    if (event.target.classList.contains('deleteBtn')) {
+      event.target.closest('.card').remove();
+    }
+  });
+</script>
+</body>
+</html>
